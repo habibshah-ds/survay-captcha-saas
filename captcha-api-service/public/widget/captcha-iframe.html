@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Captcha Iframe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="./captcha-adjustable.css">
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: sans-serif;
+    }
+    #iframe-root {
+      padding: 6px;
+    }
+    
+    /* Loading component styles */
+    .captcha-loading-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .captcha-loading-spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+      margin-bottom: 10px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    // Pass through config from URL parameters
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    window.CAPTCHA_SITE_KEY = getParam("sitekey");
+    window.CAPTCHA_API_BASE = getParam("api");
+  </script>
+
+</head>
+
+<body>
+  <!-- Loading state (initially hidden) -->
+  <div id="captcha-loading" class="captcha-loading-box" style="display:none;">
+    <div class="captcha-loading-spinner"></div>
+    <div>Loading…</div>
+  </div>
+
+  <!-- Main CAPTCHA container -->
+  <div id="iframe-root" data-captcha-adjustable></div>
+
+  <script src="./captcha-adjustable.js"></script>
+
+  <script>
+    // Auto-resize iframe
+    function sendHeight() {
+      const h = document.body.scrollHeight;
+      parent.postMessage({ captchaIframeHeight: h }, "*");
+    }
+    
+    // Resize on DOM changes
+    const ro = new ResizeObserver(sendHeight);
+    ro.observe(document.body);
+
+    window.addEventListener("CaptchaSolved", function (ev) {
+      // Forward token to parent window
+      parent.postMessage({ captchaToken: ev.detail.token }, "*");
+    });
+
+    // Show loading state initially, hide when CAPTCHA is ready
+    document.getElementById('captcha-loading').style.display = 'flex';
+    
+    // Example: Hide loading when CAPTCHA is initialized
+    window.addEventListener("CaptchaReady", function() {
+      document.getElementById('captcha-loading').style.display = 'none';
+    });
+
+    // Initial height
+    setTimeout(sendHeight, 200);
+  </script>
+</body>
+</html>

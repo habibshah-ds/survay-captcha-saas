@@ -1,0 +1,121 @@
+/* Backdrop */
+#captcha-popup {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 999999;
+}
+
+#captcha-popup.visible {
+  display: block;
+}
+
+.captcha-popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+}
+
+/* Popup Window */
+.captcha-popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  font-family: sans-serif;
+  animation: popupFade 0.2s ease;
+}
+
+/* Text */
+.popup-question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Buttons */
+.popup-option {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.popup-option:hover {
+  background: #eee;
+}
+
+.popup-option.selected {
+  border-color: #0095ff;
+  background: #e8f4ff;
+}
+
+/* PoW */
+#popup-pow-status {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+#popup-pow-status.ok {
+  color: green;
+  font-weight: bold;
+}
+
+/* Submit */
+.popup-submit {
+  margin-top: 12px;
+  width: 100%;
+  background: #007bff;
+  color: white;
+  padding: 11px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.popup-submit:hover {
+  background: #0069d9;
+}
+
+/* Success */
+.popup-success {
+  text-align: center;
+  font-size: 20px;
+  color: green;
+  font-weight: bold;
+}
+
+/* Errors */
+#captcha-popup-error {
+  margin-top: 10px;
+  color: red;
+  font-size: 13px;
+  text-align: center;
+  display: none;
+}
+
+@keyframes popupFade {
+  from { opacity: 0; transform: translate(-50%, -45%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  padding: 20px;
+  color: #555;
+}

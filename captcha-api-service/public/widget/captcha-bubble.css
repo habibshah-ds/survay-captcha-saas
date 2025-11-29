@@ -1,0 +1,122 @@
+/* BUBBLE BUTTON */
+#captcha-bubble {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 999999;
+  font-family: sans-serif;
+}
+
+#captcha-bubble-button {
+  width: 52px;
+  height: 52px;
+  background: #007bff;
+  border-radius: 50%;
+  color: white;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  transition: transform .15s;
+}
+
+#captcha-bubble-button:hover {
+  transform: scale(1.08);
+}
+
+/* PANEL */
+#captcha-bubble-panel {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 330px;
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+  display: none;
+  animation: bubbleSlide .2s ease;
+}
+
+#captcha-bubble-panel.open {
+  display: block;
+}
+
+/* Survey UI */
+.bubble-question {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.bubble-option {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border-radius: 6px;
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.bubble-option:hover {
+  background: #eaeaea;
+}
+
+.bubble-option.selected {
+  background: #e8f4ff;
+  border-color: #0095ff;
+}
+
+/* PoW */
+#bubble-pow-status {
+  margin-top: 10px;
+  display: block;
+  font-size: 14px;
+  color: #555;
+}
+
+#bubble-pow-status.ok {
+  font-weight: bold;
+  color: green;
+}
+
+/* Submit */
+.bubble-submit {
+  margin-top: 12px;
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  border-radius: 6px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.bubble-submit:hover {
+  background: #0069d9;
+}
+
+/* Success */
+.bubble-success {
+  text-align: center;
+  font-size: 18px;
+  color: green;
+  margin: 12px 0;
+}
+
+/* Loader */
+.bubble-loader {
+  text-align: center;
+  padding: 12px;
+  color: #666;
+}
+
+/* Animation */
+@keyframes bubbleSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

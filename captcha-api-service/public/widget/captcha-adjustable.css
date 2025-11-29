@@ -1,0 +1,95 @@
+.adj-wrapper {
+  width: 100%;
+  font-family: sans-serif;
+  padding: 10px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.adj-question {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Responsive Grid */
+.adj-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.adj-option {
+  padding: 8px;
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.adj-option.selected {
+  background: #e8f4ff;
+  border-color: #0095ff;
+}
+
+.adj-pow {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+#adj-pow-status.ok {
+  color: green;
+  font-weight: bold;
+}
+
+.adj-submit {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.adj-submit:hover {
+  background: #0069d9;
+}
+
+.adj-loader {
+  text-align: center;
+  color: #555;
+  padding: 10px;
+}
+
+#adj-error {
+  margin-top: 6px;
+  font-size: 13px;
+  color: red;
+  display: none;
+}
+
+/* Tiny size mode */
+.adj-wrapper.tiny .adj-question {
+  font-size: 13px;
+}
+
+.adj-wrapper.tiny .adj-option {
+  font-size: 12px;
+  padding: 5px;
+}
+
+/* Micro mode (very small area) */
+.adj-wrapper.micro .adj-options-grid {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.adj-wrapper.micro .adj-option {
+  padding: 4px;
+  font-size: 11px;
+}
