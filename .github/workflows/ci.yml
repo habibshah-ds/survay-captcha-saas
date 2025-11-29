@@ -1,0 +1,84 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # -----------------------
+      # CAPTCHA API MODULE
+      # -----------------------
+      - name: Install Captcha API Dependencies
+        working-directory: ./captcha-api
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "captcha-api has no package.json yet. Skipping..."
+          fi
+
+      - name: Run Captcha API Tests
+        working-directory: ./captcha-api
+        run: |
+          if npm run | grep -q "test"; then
+            npm test
+          else
+            echo "No captcha-api tests. Skipping..."
+          fi
+
+      # -----------------------
+      # DASHBOARD MODULE
+      # -----------------------
+      - name: Install Dashboard Backend Dependencies
+        working-directory: ./dashboard/backend
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "dashboard backend missing package.json. Skipping..."
+          fi
+
+      - name: Install Dashboard Frontend Dependencies
+        working-directory: ./dashboard/frontend
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "dashboard frontend missing package.json. Skipping..."
+          fi
+
+      - name: Run Dashboard Tests
+        working-directory: ./dashboard
+        run: |
+          if npm run | grep -q "test"; then
+            npm test
+          else
+            echo "No dashboard tests. Skipping..."
+          fi
+
+      - name: Build Dashboard Frontend
+        working-directory: ./dashboard/frontend
+        run: |
+          if npm run | grep -q "build"; then
+            npm run build
+          else
+            echo "No frontend build script yet."
+          fi
