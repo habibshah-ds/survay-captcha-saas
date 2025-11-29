@@ -1,0 +1,28 @@
+import bcrypt from "bcryptjs";
+import { db } from "../../config/db.js";
+import { signToken } from "../../utils/jwt.js";
+
+export const register = async ({ name, email, password }) => {
+  const hash = await bcrypt.hash(password, 10);
+
+  const result = await db.query(
+    `INSERT INTO users (name,email,password) VALUES ($1,$2,$3) RETURNING id,name,email`,
+    [name, email, hash]
+  );
+
+  return result.rows[0];
+};
+
+export const login = async ({ email, password }) => {
+  const result = await db.query("SELECT * FROM users WHERE email=$1", [email]);
+  const user = result.rows[0];
+
+  if (!user) throw new Error("Invalid email or password");
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) throw new Error("Invalid email or password");
+
+  const token = signToken({ id: user.id, email: user.email });
+
+  return { token, user: { id: user.id, name: user.name, email: user.email } };
+};
