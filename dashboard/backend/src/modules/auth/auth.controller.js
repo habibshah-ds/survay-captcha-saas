@@ -1,29 +1,22 @@
-import * as AuthService from "./auth.service.js";
+// FILE: backend/src/modules/auth/auth.controller.js
+import { register, login } from "./auth.service.js";
 
 export const registerController = async (req, res) => {
   try {
-    const user = await AuthService.register(req.body);
-    res.json(user);
+    const user = await register(req.body);
+    res.status(201).json({ success: true, user });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error("Register error:", err);
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 
 export const loginController = async (req, res) => {
   try {
-    const { token, user } = await AuthService.login(req.body);
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "lax",
-    });
-
-    res.json({ user });
+    const result = await login(req.body);
+    res.status(200).json({ success: true, ...result });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error("Login error:", err);
+    res.status(400).json({ success: false, message: err.message });
   }
-};
-
-export const meController = async (req, res) => {
-  res.json({ user: req.user });
 };

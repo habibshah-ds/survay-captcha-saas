@@ -1,8 +1,10 @@
-import express from "express";
-import questions from "./questions.js";
+import { Router } from "express";
+import authRoutes from "../modules/auth/auth.routes.js";
+import questionRoutes from "../modules/questions/question.routes.js";
 
-const router = express.Router();
+const router = Router();
 
-router.use("/questions", questions);
+router.use("/auth", authRoutes);
+router.use("/questions", questionRoutes);
 
 export default router;
